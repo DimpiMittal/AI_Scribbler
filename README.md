@@ -79,9 +79,6 @@ Your application should now be running at `http://127.0.0.1:5000/`
 4. Push to the branch: `git push origin feature-name`.
 5. Open a pull request!
 
-## 🛡️ License
-This project is **open-source** and available under the [MIT License](LICENSE).
-
 ## 🙌 Acknowledgments
 - [Cohere AI](https://cohere.com/) for text generation.
 - [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) for web scraping.
