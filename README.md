@@ -1,6 +1,6 @@
 # AI Scribbler - Multi-Agent SEO Blog Generator
 
-![AI Scribbler](https://your-image-url.com) <!-- Add an image banner if available -->
+
 
 ## 🚀 About AI Scribbler
 **AI Scribbler** is a powerful multi-agent **SEO blog generator** that automates content creation using AI. It leverages **Cohere AI**, **web scraping**, and **voice recognition** to generate high-quality, optimized blog content efficiently. The project is built using **Python (Flask)** and integrates multiple AI tools to enhance content generation and SEO effectiveness.
