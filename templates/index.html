@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Blog Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Added jQuery -->
+    <style>
+      
+
+      /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Navbar */
+header {
+    background: rgb(56, 56, 231);
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Full width */
+    padding: 0 20px;
+}
+
+/* Logo Styling */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+    animation: glow 1.5s infinite alternate, fadeIn 2s ease-in-out;
+    margin-left: 0; /* Ensures logo stays at the very left */
+    padding-left: 20px; /* Adjust spacing from the left */
+}
+
+/* Glowing Animation */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+    }
+    to {
+        text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff, 0 0 40px #00f7ff;
+    }
+}
+
+/* Smooth Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 23px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #d8c179;
+}
+
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: rgb(247, 247, 252);
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading Animation */
+.animated-text {
+    font-family: Inter;
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 1.1em;
+    letter-spacing: -0.05em;
+    text-align: center;
+    color: #1E2022;
+}
+
+/* Individual word animation */
+.animated-text span {
+    opacity: 0;
+    transform: translateY(20px);
+    display: inline-block; /* Ensures animation works properly */
+    animation: fadeIn 0.6s forwards ease-in-out;
+}
+
+/* Correct delay for each word */
+.animated-text span:nth-child(1) { animation-delay: 0.3s; }
+.animated-text span:nth-child(2) { animation-delay: 0.7s; }
+.animated-text span:nth-child(3) { animation-delay: 1.1s; }
+.animated-text span:nth-child(4) { animation-delay: 1.5s; }
+
+/* Typing Effect for Subheading */
+.animated-subtext {
+    font-size: 22px;
+    color: rgb(19, 18, 18);
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 100%;
+    animation: typing 4s steps(40) forwards;
+    margin-bottom: 25px; /* Added space below subtext */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Typing animation */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Input and Button */
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#topic-input {
+    padding: 14px;
+    width: 340px;
+    font-size: 18px;
+    border: none;
+    background: #e5e5e7;
+    color: rgb(14, 14, 14);
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+button {
+    padding: 14px 24px;
+    font-size: 18px;
+    background: linear-gradient(110.37deg, #963FFF -9.83%, #2E42FF 91.64%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+
+    /* Ensure button touches input */
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+button:hover {
+    background: #004de6;
+}
+
+
+
+
+/* Content Section */
+.content {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #5151a7, #63426e);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f8f9ff;
+    font-size: 30px;
+}
+
+#blog-container {
+    font-size: 18px;
+    line-height: 1.8;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#loading {
+    display: none;
+    color: #d4d4d9;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Ensure the page takes full height */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main content area */
+main {
+    flex: 1;
+}
+
+
+/* Full section styling */
+.comparison-section {
+    text-align: center;
+    padding: 50px 5%;
+    background: linear-gradient(135deg, #e2d9f3, #d5c3ea);
+    color: #121111;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    z-index: 1;
+    max-width: 90%;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Title styling */
+.section-title {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #2a2a2a;
+}
+
+/* Subtitle styling */
+.section-subtitle {
+    font-size: 18px;
+    margin-bottom: 35px;
+    color: #3e3e3e;
+}
+
+/* Comparison container */
+.comparison-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 40px 5%;
+    border-radius: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Individual comparison cards */
+.comparison-card {
+    flex: 1;
+    padding: 25px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #d393a9, #ede28e);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    transition: transform 0.3s ease-in-out, background 0.3s;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    padding-top: 15px;
+}
+
+.comparison-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Headings */
+.comparison-card h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+}
+
+/* Background images */
+.bg-image {
+    width: 100%;
+    height: 85px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+/* List styling */
+.comparison-card ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+/* List items */
+.comparison-card li {
+    font-size: 20px;
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1a1a1a;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .comparison-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .comparison-card {
+        width: 90%;
+    }
+}
+
+
+
+/* FAQ Section Styling */
+.faq-section {
+    width: 95%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background: linear-gradient(135deg, #fcfcfc, #f7f7f7);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* FAQ Title */
+.faq-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #2a2a2a;
+}
+
+/* Individual FAQ item */
+.faq-item {
+    background: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 18px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Active FAQ: Adds a light gradient when clicked */
+.faq-item.active {
+    background: linear-gradient(135deg, #fcfcfc, #f7f7f7);
+}
+
+/* Question Section */
+.faq-question {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Toggle Button */
+.faq-toggle {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+    color: #444;
+    transition: transform 0.3s ease;
+}
+
+/* Answer Section */
+.faq-answer {
+    font-size: 18px;
+    color: #444;
+    margin-top: 10px;
+    display: none;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Active FAQ: When Open */
+.faq-item.active .faq-answer {
+    display: block;
+    opacity: 1;
+}
+
+.faq-item.active .faq-toggle {
+    transform: rotate(45deg); /* "+" turns into "×" */
+}
+
+
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(135deg, #11132c, #1d1c1c); /* Dark modern gradient */
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Footer Top Intro Lines */
+.footer-intro {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Main Footer Container */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Each Footer Section */
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 15px;
+}
+
+/* Section Headings */
+.footer-section h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #ffcc00; /* Golden heading */
+    position: relative;
+}
+
+/* Contact Section Styling */
+.contact-section p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Follow Us Icons */
+.social-icon {
+    display: inline-block;
+    margin: 5px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
+}
+
+/* Use Cases & AI Blog Styling */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffcc00;
+    padding-left: 5px;
+}
+
+/* Copyright */
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Floating Robot Button (Increased Size & Glowing Effect) */
+#robot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 90px;  /* Increased size */
+    height: 90px; /* Increased size */
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+    border: 4px solid #001f3f; /* Dark Blue Border */
+    box-shadow: 0px 0px 10px rgba(0, 31, 63, 0.8);
+    animation: glowEffect 1.5s infinite alternate; /* Smooth Glow Animation */
+}
+
+/* Robot Icon */
+#robot-btn img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+#robot-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Glow Animation */
+@keyframes glowEffect {
+    0% {
+        box-shadow: 0px 0px 10px rgba(0, 31, 63, 0.8);
+    }
+    100% {
+        box-shadow: 0px 0px 20px rgba(0, 31, 63, 1); /* Brighter Glow */
+    }
+}
+
+
+/* Voice Assistant Box */
+#voice-assistant {
+    position: fixed;
+    bottom: -400px;
+    right: 90px;
+    width: 450px;
+    height: 420px;
+    background: linear-gradient(to bottom, #7cb0e9, #fffefe);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    transition: bottom 0.3s ease-in-out;
+    z-index: 99;
+    color: white;
+}
+
+/* Close Button */
+.close-btn {
+    cursor: pointer;
+    float: right;
+    font-size: 30px;
+    color: rgb(11, 8, 8);
+}
+
+/* AI Response Box */
+#ai-response {
+    min-height: 200px;
+    padding: 15px;
+    border: 2px solid white;
+    border-radius: 10px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: rgb(6, 6, 6);
+    margin-bottom: 10px;
+    overflow-y: auto;
+    max-height: 220px;
+}
+
+/* Input Box */
+.voice-input {
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 50px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+}
+
+/* Input Text */
+#recognized-text {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 8px;
+    background: transparent;
+    color: rgb(5, 5, 5);
+}
+
+/* Mic & Send Buttons */
+#voice-mic, #send-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+#voice-mic img, #send-text img {
+    width: 35px;
+    height: 35px;
+    filter: brightness(1.5);
+}
+
+/* Mic Wave Effect */
+.listening img {
+    animation: micWave 1.5s infinite alternate;
+}
+
+@keyframes micWave {
+    from {
+        transform: scale(1);
+        filter: brightness(2);
+    }
+    to {
+        transform: scale(1.2);
+        filter: brightness(3);
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">AI Scribbler</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('sign') }}">Sign in</a></li>
+            </ul>
+            
+            
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+           
+
+            <!-- Heading Animation -->
+<div class="animated-text">
+    <span>AI-Powered</span>
+    <span>SEO</span>
+    <span>Blog</span>
+    <span>Generator</span>
+</div>
+<br><br>
+<!-- Typing Effect for Subheading -->
+<p class="animated-subtext">Enhance your blog with in-depth outlines, extensive web research and SEO optimization using AI.</p>
+
+<br><br>
+<br>
+            
+<div class="input-container">
+    <input type="text" id="topic-input" placeholder="Enter a topic...">
+    <button id="generate-btn">Generate Blog</button>
+</div>
+
+            <p id="loading">⏳ Creating blog... Please wait a few seconds.</p>
+        </section>
+
+        <section class="content">
+            <h2>Generated Blog</h2>
+            <div id="blog-container">
+                <p>Enter a topic and click the button above to generate a blog post.</p>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+        </section>
+    </main>
+
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+    <section class="comparison-section">
+        <h2 class="section-title">Why Choose AI Blog Writer Tool Over Traditional Writing?</h2>
+        <p class="section-subtitle">Understand the differences between using blogging tools like <strong>Multi SEO Blog Generator</strong> and relying on a human approach.</p>
+    
+        <div class="comparison-container">
+            <!-- Blogging Tools Section -->
+            <div class="comparison-card" id="ai-tools">
+                <div class="bg-image tools-bg"></div>
+                <h3>Blogging Tools</h3>
+                <br>
+                <ul>
+                    <li><strong>Time Efficiency:</strong> Creates content in minutes</li>
+                    <li><strong>Language Options:</strong> Supports 30+ languages</li>
+                    <li><strong>SEO Optimization:</strong> Built-in SEO optimization</li>
+                    <li><strong>Customization:</strong> Quick adjustments for images, length</li>
+                    <li><strong>Consistency:</strong> Consistent quality and style</li>
+                    <li><strong>Cost:</strong> Low cost</li>
+                    <li><strong>Research:</strong> Instant research done by AI</li>
+                    <li><strong>Creativity:</strong> Creative but less nuanced</li>
+                    <li><strong>Scalability:</strong> Easily scales content production</li>
+                    <li><strong>Publication:</strong> Direct publish to WordPress</li>
+                </ul>
+            </div>
+            
+            <!-- Human Approach Section -->
+            <div class="comparison-card" id="human-approach">
+                <div class="bg-image human-bg"></div>
+                <h3>Human Approach</h3>
+                <br>
+                <ul>
+                    <li><strong>Time Efficiency:</strong> Takes hours or days</li>
+                    <li><strong>Language Options:</strong> Limited by writer's proficiency</li>
+                    <li><strong>SEO Optimization:</strong> Manual effort required</li>
+                    <li><strong>Customization:</strong> Time-consuming and manual</li>
+                    <li><strong>Consistency:</strong> Varies with expertise</li>
+                    <li><strong>Cost:</strong> High cost of hiring writers</li>
+                    <li><strong>Research:</strong> Manual research required</li>
+                    <li><strong>Creativity:</strong> More nuanced and original</li>
+                    <li><strong>Scalability:</strong> Limited by human capacity</li>
+                    <li><strong>Publication:</strong> Manual formatting and uploading</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+<br><br>
+<br><br>
+
+    <!-- FAQ Section -->
+<section class="faq-section">
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+    
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>What is AI-powered content generation?</span>
+            <button class="faq-toggle">+</button>
+        </div>
+        <div class="faq-answer">
+            AI-powered content generation uses machine learning models to create text, mimicking human writing patterns.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Can AI replace human writers?</span>
+            <button class="faq-toggle">+</button>
+        </div>
+        <div class="faq-answer">
+            AI can assist with content creation, but human creativity and understanding are irreplaceable.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Is AI-generated content plagiarism-free?</span>
+            <button class="faq-toggle">+</button>
+        </div>
+        <div class="faq-answer">
+            AI generates unique content, but it's always recommended to check for originality and refine the text.
+        </div>
+    </div>
+</section>
+
+
+<!-- Floating Robot Button (Opens Assistant) -->
+<div id="robot-btn" onclick="toggleAssistant()">
+    <img src="{{ url_for('static', filename='images/robot.jpeg') }}" alt="Robot">
+</div>
+
+<!-- Voice Assistant Section (Hidden by Default) -->
+<div id="voice-assistant">
+    <span class="close-btn" onclick="toggleAssistant()">&times;</span>
+
+    <!-- AI Response Box -->
+    <div id="ai-response">AI Response will appear here...</div>
+
+    <!-- Input + Mic + Send Button -->
+    <div class="voice-input">
+        <input type="text" id="recognized-text" placeholder="Speak or type here...">
+
+        <button id="voice-mic" onclick="startVoiceRecognition()">
+            <img src="{{ url_for('static', filename='images/mic.png') }}" alt="Mic">
+        </button>
+
+        <button id="send-text" onclick="sendToFlask()">
+            <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="Send">
+        </button>
+    </div>
+</div>
+
+
+<footer>
+    <div class="footer-intro">
+        <p>Empowering Your Content with AI Precision 🚀</p>
+        <p>Create SEO-Optimized Blogs & Scale Your Content Strategy Effortlessly!</p>
+    </div>
+
+    <div class="footer-container">
+        <!-- Contact Us Section -->
+        <div class="footer-section contact-section">
+            <h3>📩 Contact Us</h3>
+            <p><strong>Email:</strong> support@aiblog.com</p>
+            <p><strong>Phone:</strong> +1 234 567 890</p>
+            <p><strong>Address:</strong> 123 AI Street, Tech City, USA</p>
+        </div>
+
+        <!-- Follow Us Section -->
+        <div class="footer-section follow-us">
+            <h3>🔗 Follow Us</h3>
+            <a href="#" class="social-icon">X</a>
+            <a href="#" class="social-icon">Facebook</a>
+            <a href="#" class="social-icon">YouTube</a>
+            <a href="#" class="social-icon">Instagram</a>
+        </div>
+
+        <!-- Use Cases Section -->
+        <div class="footer-section">
+            <h3>💡 Use Cases</h3>
+            <ul>
+                <li><a href="#">Marketing</a></li>
+                <li><a href="#">Social Media</a></li>
+                <li><a href="#">YouTube</a></li>
+                <li><a href="#">SEO</a></li>
+                <li><a href="#">Blogs</a></li>
+            </ul>
+        </div>
+
+        <!-- AI Blog Section -->
+        <div class="footer-section">
+            <h3>🤖 AI Blog</h3>
+            <p>Multi-Agent SEO Blog Generator</p>
+            <p>Your AI Assistant for Content Creation, SEO & More.</p>
+            <p><strong>Start for Free!</strong></p>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <p class="footer-bottom">&copy; 2025 AI Blog Generator. All rights reserved.</p>
+</footer>
+
+
+    <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+
+        question.addEventListener("click", function () {
+            const isActive = item.classList.contains("active");
+
+            // Close all FAQs first
+            faqItems.forEach((faq) => {
+                faq.classList.remove("active");
+                faq.querySelector(".faq-answer").style.display = "none";
+            });
+
+            // If it was not active, open it
+            if (!isActive) {
+                item.classList.add("active");
+                answer.style.display = "block";
+            }
+        });
+    });
+});
+
+
+
+document.getElementById('generate-btn').addEventListener('click', function() {
+    document.getElementById('blog-status').style.display = 'block';
+    document.querySelector('.progress-container').style.display = 'block';
+    
+    let progress = 0;
+    let interval = setInterval(() => {
+        if (progress >= 100) {
+            clearInterval(interval);
+            document.getElementById('blog-status').innerText = "Blog Generated!";
+        } else {
+            progress += 5;
+            document.getElementById('progress-bar').style.width = progress + "%";
+            document.getElementById('progress-text').innerText = progress + "%";
+        }
+    }, 500);
+});
+
+        $(document).ready(function () {
+            $("#generate-btn").click(function () {
+                const topic = $("#topic-input").val().trim();
+
+                if (!topic) {
+                    alert("Please enter a topic.");
+                    return;
+                }
+
+                // Show loading message and disable button
+                $("#loading").show();
+                $("#generate-btn").prop("disabled", true);
+                $("#blog-container").html(""); // Clear previous content
+
+                $.ajax({
+                    url: "/generate_blog",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ topic: topic }),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#blog-container").html(`<h2>Generated Blog:</h2><p>${response.content.replace(/\n/g, "<br>")}</p>`);
+                        } else {
+                            $("#blog-container").html("<p>⚠️ Failed to generate blog. Please try again.</p>");
+                        }
+                    },
+                    error: function () {
+                        $("#blog-container").html("<p>⚠️ Error occurred. Try again later.</p>");
+                    },
+                    complete: function () {
+                        // Hide loading message and enable button
+                        $("#loading").hide();
+                        $("#generate-btn").prop("disabled", false);
+                    }
+                });
+            });
+        });
+
+
+
+
+        
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const robotBtn = document.getElementById("robot-btn");
+    const voiceAssistant = document.getElementById("voice-assistant");
+    const closeBtn = document.querySelector(".close-btn");
+    const voiceMic = document.getElementById("voice-mic");
+    const recognizedText = document.getElementById("recognized-text");
+    const sendText = document.getElementById("send-text");
+    const aiResponse = document.getElementById("ai-response");
+
+    let recognition;
+    let isListening = false; // Toggle state for mic
+
+    // Check if Speech Recognition is available
+    if ("webkitSpeechRecognition" in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = "en-US";
+
+        recognition.onstart = function () {
+            console.log("Listening...");
+            voiceMic.classList.add("listening"); // Add wave animation
+            isListening = true;
+        };
+
+        recognition.onresult = function (event) {
+            let transcript = "";
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            recognizedText.value = transcript; // Set input field value
+        };
+
+        recognition.onerror = function (event) {
+            console.log("Error: " + event.error);
+        };
+
+        recognition.onend = function () {
+            voiceMic.classList.remove("listening"); // Remove wave animation
+            isListening = false;
+            console.log("Stopped listening.");
+        };
+    } else {
+        alert("Your browser does not support speech recognition. Try Google Chrome.");
+    }
+
+    // Toggle Speech Recognition on Mic Click
+    voiceMic.addEventListener("click", function () {
+        if (isListening) {
+            recognition.stop();
+        } else {
+            recognition.start();
+        }
+    });
+
+    // Send Text to AI and Generate Response
+    sendText.addEventListener("click", function () {
+        let userText = recognizedText.value.trim(); // Get value from input field
+        if (userText === "") {
+            aiResponse.innerHTML = `<strong>AI:</strong> Please enter or speak something.`;
+            return;
+        }
+
+        // Display User Input
+        aiResponse.innerHTML = `<strong>You:</strong> ${userText}<br><strong>AI:</strong> Thinking...`;
+
+        // Simulate AI Response (Replace with Backend API Call)
+        setTimeout(() => {
+            let aiReply = generateAIResponse(userText);
+            aiResponse.innerHTML = `<strong>You:</strong> ${userText}<br><strong>AI:</strong> ${aiReply}`;
+        }, 1500);
+
+        // Clear input field after sending
+        recognizedText.value = "";
+    });
+
+    // Open Voice Assistant
+    robotBtn.addEventListener("click", function () {
+        voiceAssistant.style.bottom = "20px"; // Slide up into view
+    });
+
+    // Close Voice Assistant
+    closeBtn.addEventListener("click", function () {
+        voiceAssistant.style.bottom = "-400px"; // Hide again
+    });
+
+    // Simple AI Response Generator (Replace with API Call)
+    function generateAIResponse(userInput) {
+        let responses = {
+            "Hello": "Hi there! How can I assist you today?",
+            "how are you": "I'm just a bot, but I'm functioning well! What about you?",
+            "what is your name": "I'm your AI Assistant. How can I help?",
+            "who created you": "I was created by a talented developer to assist with various tasks!",
+            "bye": "Goodbye! Have a great day. 😊",
+            "Hii": "Hii, how are you ?"
+            
+        };
+
+        // Return predefined response or a generic one
+        return responses[userInput.toLowerCase()] || "That's interesting! Tell me more.";
+    }
+});
+
+    </script>
+</body>
+</html>

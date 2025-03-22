@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+openai
+nltk
+google-api-python-client
+flask

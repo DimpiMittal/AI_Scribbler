@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+
+       
+      /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Navbar */
+header {
+    background: rgb(56, 56, 231);
+    color: white;
+    padding: 35px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #e8e9ef;
+    margin-left: 0;
+    padding-left: 0;
+    flex-shrink: 0; /* Prevents shrinking */
+}
+
+/* Make navigation links bold and add spacing */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 50px; /* Adds spacing between links */
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin: 0; /* Remove unnecessary margin */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 23px;
+    font-weight: bold; /* Ensures text is bold */
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #413952;
+}
+
+
+.contact-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* Contact Form */
+.contact-container {
+    max-width: 600px;
+    margin: auto;
+    background: rgb(227, 240, 246);
+    padding: 30px;
+    border-radius: 10px;
+    color: black;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+/* Button Styling */
+.btn {
+    background: #ff7f50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ff6347;
+    transform: scale(1.05);
+}
+
+/* Confirmation Message */
+#confirmation {
+    margin-top: 20px;
+    font-size: 2 rem;
+    color: rgb(30, 116, 78);
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+}
+
+
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(135deg, #11132c, #1d1c1c); /* Dark modern gradient */
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Footer Top Intro Lines */
+.footer-intro {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Main Footer Container */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Each Footer Section */
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 15px;
+}
+
+/* Section Headings */
+.footer-section h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #ffcc00; /* Golden heading */
+    position: relative;
+}
+
+/* Contact Section Styling */
+.contact-section p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Follow Us Icons */
+.social-icon {
+    display: inline-block;
+    margin: 5px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
+}
+
+/* Use Cases & AI Blog Styling */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffcc00;
+    padding-left: 5px;
+}
+
+/* Copyright */
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+    <header>
+        <nav>
+            <div class="logo">AI Blog Generator</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('sign') }}">Sign in</a></li>
+            </ul>
+            
+            
+        </nav>
+    </header>
+
+    <section class="contact-section">
+        <h2>Contact Us</h2>
+        <p>Have a question or want to share something? Feel free to reach out!</p>
+
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <form id="contact-form">
+                <div class="input-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" placeholder="Write your message" required></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="share">Share Something (Optional)</label>
+                    <textarea id="share" placeholder="Share your thoughts..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+        
+        <div id="confirmation" class="hidden">✅ Message sent successfully!</div>
+    </section>
+
+
+    <footer>
+        <div class="footer-intro">
+            <p>Empowering Your Content with AI Precision 🚀</p>
+            <p>Create SEO-Optimized Blogs & Scale Your Content Strategy Effortlessly!</p>
+        </div>
+    
+        <div class="footer-container">
+            <!-- Contact Us Section -->
+            <div class="footer-section contact-section">
+                <h3>📩 Contact Us</h3>
+                <p><strong>Email:</strong> support@aiblog.com</p>
+                <p><strong>Phone:</strong> +1 234 567 890</p>
+                <p><strong>Address:</strong> 123 AI Street, Tech City, USA</p>
+            </div>
+    
+            <!-- Follow Us Section -->
+            <div class="footer-section follow-us">
+                <h3>🔗 Follow Us</h3>
+                <a href="#" class="social-icon">X</a>
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">YouTube</a>
+                <a href="#" class="social-icon">Instagram</a>
+            </div>
+    
+            <!-- Use Cases Section -->
+            <div class="footer-section">
+                <h3>💡 Use Cases</h3>
+                <ul>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Social Media</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">SEO</a></li>
+                    <li><a href="#">Blogs</a></li>
+                </ul>
+            </div>
+    
+            <!-- AI Blog Section -->
+            <div class="footer-section">
+                <h3>🤖 AI Blog</h3>
+                <p>Multi-Agent SEO Blog Generator</p>
+                <p>Your AI Assistant for Content Creation, SEO & More.</p>
+                <p><strong>Start for Free!</strong></p>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <p class="footer-bottom">&copy; 2025 AI Blog Generator. All rights reserved.</p>
+    </footer>
+
+    <script>
+
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault();  // Prevent form from refreshing the page
+
+    // Get input values
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let message = document.getElementById("message").value.trim();
+    
+    // Validate input
+    if (name === "" || email === "" || message === "") {
+        alert("⚠️ Please fill in all required fields!");
+        return;
+    }
+
+    // Simulate form submission
+    document.getElementById("confirmation").style.display = "block";
+
+    // Clear form fields
+    document.getElementById("contact-form").reset();
+
+    // Hide confirmation after 3 seconds
+    setTimeout(() => {
+        document.getElementById("confirmation").style.display = "none";
+    }, 3000);
+});
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Blog Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+
+
+      /* General Reset */
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Navbar */
+header {
+    background: rgb(56, 56, 231);
+    color: white;
+    padding: 35px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #e8e9ef;
+    margin-left: 0;
+    padding-left: 0;
+    flex-shrink: 0; /* Prevents shrinking */
+}
+
+/* Make navigation links bold and add spacing */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 50px; /* Adds spacing between links */
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin: 0; /* Remove unnecessary margin */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 23px;
+    font-weight: bold; /* Ensures text is bold */
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #413952;
+}
+
+/* About Section */
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.about-text {
+    max-width: 600px;
+}
+
+.about-text h1 {
+    font-size: 40px;
+    color: #222;
+    margin-bottom: 10px;
+    animation: slideInLeft 1s ease-in-out;
+}
+
+.about-text p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+    animation: slideInLeft 1.2s ease-in-out;
+}
+
+.about-image img {
+    width: 400px;
+    height: auto;
+    margin-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.about-image img:hover {
+    transform: scale(1.1);
+}
+
+/* Mission & Vision */
+.mission-vision {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f6f6f6, #eceff1);
+}
+
+.mission, .vision {
+    max-width: 400px;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.mission:hover, .vision:hover {
+    transform: translateY(-10px);
+}
+
+.mission img, .vision img {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.mission h2, .vision h2 {
+    font-size: 28px;
+    color: #090909;
+    margin-bottom: 10px;
+}
+
+.mission p, .vision p {
+    font-size: 18px;
+    color: #2a2828;
+}
+
+/* Mission Section */
+.mission {
+    background: linear-gradient(135deg, #e2b2bc, #9cc1db);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.mission:hover {
+    transform: translateY(-10px);
+}
+
+/* Vision Section */
+.vision {
+    background: linear-gradient(135deg, #b2e2dd, #9cc1db);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.vision:hover {
+    transform: translateY(-10px);
+}
+
+
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(135deg, #11132c, #1d1c1c); /* Dark modern gradient */
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Footer Top Intro Lines */
+.footer-intro {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Main Footer Container */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Each Footer Section */
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 15px;
+}
+
+/* Section Headings */
+.footer-section h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #ffcc00; /* Golden heading */
+    position: relative;
+}
+
+/* Contact Section Styling */
+.contact-section p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Follow Us Icons */
+.social-icon {
+    display: inline-block;
+    margin: 5px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
+}
+
+/* Use Cases & AI Blog Styling */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffcc00;
+    padding-left: 5px;
+}
+
+/* Copyright */
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">AI Blog Generator</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('sign') }}">Sign in</a></li>
+            </ul>
+            
+            
+        </nav>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-container">
+        <div class="about-text">
+            <h1>About AI Blog Generator</h1>
+            <p>AI Blog Generator is your all-in-one assistant for creating high-quality, SEO-optimized blogs with ease. Whether you're a marketer, business owner, or content creator, our AI-powered tool helps you generate insightful articles effortlessly.</p>
+        </div>
+        <div class="about-image">
+            <img src="{{ url_for('static', filename='images/image.jpeg') }}" alt="AI Blog Generator">
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-vision">
+        <div class="mission">
+            <img src="{{ url_for('static', filename='images/misson.jpeg') }}" alt="Our Mission">
+            <h2>Our Mission</h2>
+            <p>To revolutionize content creation by leveraging AI to make blogging fast, simple, and effective for everyone.</p>
+        </div>
+        <div class="vision">
+            <img src="{{ url_for('static', filename='images/visson.png') }}" alt="Our Vision">
+            <h2>Our Vision</h2>
+            <p>To be the leading AI-powered content generator that helps creators worldwide produce high-quality content effortlessly.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-intro">
+            <p>Empowering Your Content with AI Precision 🚀</p>
+            <p>Create SEO-Optimized Blogs & Scale Your Content Strategy Effortlessly!</p>
+        </div>
+    
+        <div class="footer-container">
+            <!-- Contact Us Section -->
+            <div class="footer-section contact-section">
+                <h3>📩 Contact Us</h3>
+                <p><strong>Email:</strong> support@aiblog.com</p>
+                <p><strong>Phone:</strong> +1 234 567 890</p>
+                <p><strong>Address:</strong> 123 AI Street, Tech City, USA</p>
+            </div>
+    
+            <!-- Follow Us Section -->
+            <div class="footer-section follow-us">
+                <h3>🔗 Follow Us</h3>
+                <a href="#" class="social-icon">X</a>
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">YouTube</a>
+                <a href="#" class="social-icon">Instagram</a>
+            </div>
+    
+            <!-- Use Cases Section -->
+            <div class="footer-section">
+                <h3>💡 Use Cases</h3>
+                <ul>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Social Media</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">SEO</a></li>
+                    <li><a href="#">Blogs</a></li>
+                </ul>
+            </div>
+    
+            <!-- AI Blog Section -->
+            <div class="footer-section">
+                <h3>🤖 AI Blog</h3>
+                <p>Multi-Agent SEO Blog Generator</p>
+                <p>Your AI Assistant for Content Creation, SEO & More.</p>
+                <p><strong>Start for Free!</strong></p>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <p class="footer-bottom">&copy; 2025 AI Blog Generator. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

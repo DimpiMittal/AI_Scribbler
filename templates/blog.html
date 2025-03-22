@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Generated Blogs</title>
+    <link rel="stylesheet" href="static/css/blog.css">
+
+    <style>
+       
+
+       
+      /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Navbar */
+header {
+    background: rgb(56, 56, 231);
+    color: white;
+    padding: 35px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #e8e9ef;
+    margin-left: 0;
+    padding-left: 0;
+    flex-shrink: 0; /* Prevents shrinking */
+}
+
+/* Make navigation links bold and add spacing */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 50px; /* Adds spacing between links */
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin: 0; /* Remove unnecessary margin */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 23px;
+    font-weight: bold; /* Ensures text is bold */
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #413952;
+}
+
+/* Hero Section Styling */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 30vh;
+    background: linear-gradient(135deg, #7a98d0, #dadbdd);
+    color: rgb(11, 11, 11);
+    padding: 10px;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.btn {
+    margin-top: 20px;
+    display: inline-block;
+    background: #ff7c50;
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(255, 127, 80, 0.4);
+}
+
+.btn:hover {
+    background: #ff6347;
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(255, 99, 71, 0.5);
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+
+
+.blog-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.blogs {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.blog-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 30%;
+}
+
+.blog-card:hover {
+    transform: scale(1.05);
+}
+
+.read-more {
+    background: lightblue;
+    color: black;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.blog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.blog-content {
+    background: white;
+    padding: 40px;
+    max-width: 80%;
+    height: 80%;
+    overflow-y: auto;
+    border-radius: 10px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.close-btn {
+    font-size: 30px;
+    cursor: pointer;
+    float: right;
+    color: red;
+}
+
+.back-btn {
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    width: 30%;
+}
+
+
+
+/* Reviews */
+.reviews {
+    background: #007bff;
+    color: white;
+    padding: 50px 20px;
+}
+
+.review-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.review-card {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: left;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.review-card h4 {
+    color: #007bff;
+}
+
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(135deg, #11132c, #1d1c1c); /* Dark modern gradient */
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Footer Top Intro Lines */
+.footer-intro {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Main Footer Container */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Each Footer Section */
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 15px;
+}
+
+/* Section Headings */
+.footer-section h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #ffcc00; /* Golden heading */
+    position: relative;
+}
+
+/* Contact Section Styling */
+.contact-section p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Follow Us Icons */
+.social-icon {
+    display: inline-block;
+    margin: 5px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
+}
+
+/* Use Cases & AI Blog Styling */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffcc00;
+    padding-left: 5px;
+}
+
+/* Copyright */
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">AI Blog Generator</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('sign') }}">Sign in</a></li>
+            </ul>
+            
+            
+        </nav>
+    </header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Explore AI-Generated Blogs</h1>
+    <p>Our AI-powered tool creates SEO-optimized blogs in seconds!</p>
+    <a href="{{ url_for('index') }}" class="btn">Generate Your Blog</a>
+</section>
+
+
+    <!-- Generated Blogs Section -->
+    <section class="blog-container">
+        <h2>Latest AI-Generated Blogs</h2>
+        <div class="blogs">
+            <article class="blog-card" onclick="openBlog(0)">
+                <h3>🚀 The Future of AI in Content Creation</h3>
+                <p>Discover how AI is transforming the way we create content...</p>
+                <a href="#">Read More</a>
+            </article>
+            <article class="blog-card" onclick="openBlog(1)">
+                <h3>📈 SEO Strategies for 2025</h3>
+                <p>Stay ahead in the digital game with these top SEO tips...</p>
+                <a href="#">Read More</a>
+            </article>
+            <article class="blog-card" onclick="openBlog(2)">
+                <h3>🧠 How AI Understands Human Emotions</h3>
+                <p>Exploring the emotional intelligence of artificial intelligence...</p>
+                <a href="#">Read More</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Full-Screen Blog Overlay -->
+    <div id="blog-overlay" class="blog-overlay">
+        <div class="blog-content">
+            <span class="close-btn" onclick="closeBlog()">&times;</span>
+            <h2 id="blog-title"></h2>
+            <p id="blog-text"></p>
+            <button class="back-btn" onclick="closeBlog()">Back</button>
+        </div>
+    </div>
+
+
+    <!-- User Reviews Section -->
+    <section class="reviews">
+        <h2>What Users Say About Us</h2>
+        <div class="review-cards">
+            <div class="review-card">
+                <p>"This AI blog generator saved me hours of work! Highly recommend it!"</p>
+                <h4>- Sarah K.</h4>
+            </div>
+            <div class="review-card">
+                <p>"A game-changer for content creators. The quality of AI blogs is outstanding!"</p>
+                <h4>- Mark J.</h4>
+            </div>
+            <div class="review-card">
+                <p>"Fast, reliable, and SEO-friendly content at the click of a button!"</p>
+                <h4>- Emily R.</h4>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-intro">
+            <p>Empowering Your Content with AI Precision 🚀</p>
+            <p>Create SEO-Optimized Blogs & Scale Your Content Strategy Effortlessly!</p>
+        </div>
+    
+        <div class="footer-container">
+            <!-- Contact Us Section -->
+            <div class="footer-section contact-section">
+                <h3>📩 Contact Us</h3>
+                <p><strong>Email:</strong> support@aiblog.com</p>
+                <p><strong>Phone:</strong> +1 234 567 890</p>
+                <p><strong>Address:</strong> 123 AI Street, Tech City, USA</p>
+            </div>
+    
+            <!-- Follow Us Section -->
+            <div class="footer-section follow-us">
+                <h3>🔗 Follow Us</h3>
+                <a href="#" class="social-icon">X</a>
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">YouTube</a>
+                <a href="#" class="social-icon">Instagram</a>
+            </div>
+    
+            <!-- Use Cases Section -->
+            <div class="footer-section">
+                <h3>💡 Use Cases</h3>
+                <ul>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Social Media</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">SEO</a></li>
+                    <li><a href="#">Blogs</a></li>
+                </ul>
+            </div>
+    
+            <!-- AI Blog Section -->
+            <div class="footer-section">
+                <h3>🤖 AI Blog</h3>
+                <p>Multi-Agent SEO Blog Generator</p>
+                <p>Your AI Assistant for Content Creation, SEO & More.</p>
+                <p><strong>Start for Free!</strong></p>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <p class="footer-bottom">&copy; 2025 AI Blog Generator. All rights reserved.</p>
+    </footer>
+    <script>
+
+const blogs = [
+    {
+        title: "🚀 The Future of AI in Content Creation",
+        text: `
+            <h3>🔍 How AI is Transforming Content Creation</h3>
+            <p>Artificial Intelligence (AI) is no longer just a futuristic concept—it’s here, and it’s changing the way 
+               content is produced. Businesses, bloggers, and marketers are leveraging AI-driven tools to create high-quality 
+               articles, generate marketing copies, and even design social media posts in seconds.</p>
+            
+            <h3>🖥️ AI-Powered Automation</h3>
+            <p>With AI-powered content generators like ChatGPT and Jasper, companies can automate blog writing, email 
+               marketing, and product descriptions effortlessly. These tools analyze data, detect trends, and craft human-like 
+               content that engages audiences.</p>
+            
+            <h3>📢 Impact on Digital Marketing</h3>
+            <p>AI is revolutionizing digital marketing by enabling predictive analytics and personalized recommendations. 
+               Businesses can now track user behavior, predict interests, and deliver content tailored to their audience.</p>
+            
+            <h3>💡 The Future Ahead</h3>
+            <p>As AI continues to evolve, we can expect **even more intelligent tools** that refine storytelling, 
+               enhance creativity, and make content production more efficient than ever before.</p>
+        `
+    },
+    {
+        title: "📈 SEO Strategies for 2025",
+        text: `
+            <h3>🌍 The Evolving SEO Landscape</h3>
+            <p>Search Engine Optimization (SEO) is constantly evolving, and 2025 will be no exception. As AI-driven 
+               algorithms dominate search rankings, businesses must adapt to new trends to stay ahead.</p>
+            
+            <h3>🔑 Key SEO Trends for 2025</h3>
+            <p>1️⃣ **AI-Powered Keyword Research:** AI tools help find the most relevant long-tail keywords.<br>
+               2️⃣ **Voice Search Optimization:** The rise of smart assistants means businesses must optimize for voice searches.<br>
+               3️⃣ **User Intent & Personalized Content:** Search engines prioritize content that aligns with user needs.</p>
+            
+            <h3>🚀 Staying Ahead in SEO</h3>
+            <p>Businesses should focus on **high-quality, user-friendly content**, improve page speed, and leverage AI-powered 
+               analytics to enhance their online presence.</p>
+        `
+    },
+    {
+        title: "🧠 How AI Understands Human Emotions",
+        text: `
+            <h3>❤️ The Rise of Emotion-Aware AI</h3>
+            <p>AI is no longer just about numbers and data—it can now interpret and respond to human emotions, making 
+               interactions more natural and engaging.</p>
+            
+            <h3>💬 Sentiment Analysis & AI Chatbots</h3>
+            <p>AI-powered chatbots use sentiment analysis to detect user emotions and provide appropriate responses. 
+               This is transforming customer service by making it more empathetic.</p>
+            
+            <h3>🎭 Can AI Truly Understand Feelings?</h3>
+            <p>Although AI can analyze tone and expressions, it still lacks true human-like emotional depth. However, 
+               advancements in deep learning are pushing the boundaries of emotional intelligence in AI.</p>
+        `
+    }
+];
+
+// Function to display blogs
+function displayBlogs() {
+    const blogContainer = document.querySelector(".blogs");
+    blogContainer.innerHTML = "";
+
+    blogs.forEach((blog, index) => {
+        const blogCard = document.createElement("article");
+        blogCard.classList.add("blog-card");
+        blogCard.innerHTML = `
+            <h3>${blog.title}</h3>
+            <p>${blog.text.substring(0, 150)}...</p>
+            <button class="read-more" onclick="openBlog(${index})">Read More</button>
+        `;
+        blogContainer.appendChild(blogCard);
+    });
+}
+
+// Function to open full blog in an expanded section covering most of the page
+function openBlog(index) {
+    const blogOverlay = document.querySelector(".blog-overlay");
+    const blogContent = document.querySelector(".blog-content");
+    blogContent.innerHTML = `
+        <span class="close-btn" onclick="closeBlog()">&times;</span>
+        <h2>${blogs[index].title}</h2>
+        ${blogs[index].text}
+        <button class="back-btn" onclick="closeBlog()">Back</button>
+    `;
+    blogOverlay.style.display = "flex";
+}
+
+// Function to close blog overlay
+function closeBlog() {
+    document.querySelector(".blog-overlay").style.display = "none";
+}
+
+// Display blogs on page load
+document.addEventListener("DOMContentLoaded", displayBlogs);
+
+
+    </script>
+
+</body>
+</html>
