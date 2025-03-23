@@ -32,8 +32,7 @@ AI_Scribbler/
 │── app.py               # Main Flask backend
 │── requirements.txt     # Required dependencies
 │── static/              # CSS, JS, Images
-│── templates/           # HTML templates
-│── .env                 # API keys & sensitive data (ignored in Git)
+│── templates/           # HTML templates                
 │── .gitignore           # Files to ignore in Git
 │── README.md            # Project documentation
 ```
