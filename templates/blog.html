@@ -10,6 +10,7 @@
        
 
        
+     
       /* General Reset */
 * {
     margin: 0;
@@ -22,8 +23,7 @@
 header {
     background: rgb(56, 56, 231);
     color: white;
-    padding: 35px 0;
-    text-align: center;
+    padding: 20px 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -31,45 +31,68 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px;
-    margin: auto;
+    width: 100%; /* Full width */
     padding: 0 20px;
 }
 
+/* Logo Styling */
 .logo {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
-    letter-spacing: 2px;
-    color: #e8e9ef;
-    margin-left: 0;
-    padding-left: 0;
-    flex-shrink: 0; /* Prevents shrinking */
+    letter-spacing: 3px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+    animation: glow 1.5s infinite alternate, fadeIn 2s ease-in-out;
+    margin-left: 0; /* Ensures logo stays at the very left */
+    padding-left: 20px; /* Adjust spacing from the left */
 }
 
-/* Make navigation links bold and add spacing */
+/* Glowing Animation */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+    }
+    to {
+        text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff, 0 0 40px #00f7ff;
+    }
+}
+
+/* Smooth Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Navigation Links */
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 50px; /* Adds spacing between links */
-    padding: 0;
+    gap: 50px;
     margin: 0;
-}
-
-.nav-links li {
-    margin: 0; /* Remove unnecessary margin */
+    padding: 0;
 }
 
 .nav-links a {
     text-decoration: none;
     color: white;
     font-size: 23px;
-    font-weight: bold; /* Ensures text is bold */
+    font-weight: bold;
     transition: 0.3s;
 }
 
 .nav-links a:hover {
-    color: #413952;
+    color: #d8c179;
 }
+
+
+
 
 /* Hero Section Styling */
 .hero {
@@ -136,7 +159,7 @@ nav {
 
 
 .blog-container {
-    padding: 40px 20px;
+    padding: 80px 60px;
     max-width: 1200px;
     margin: auto;
 }
@@ -226,7 +249,7 @@ nav {
 
 /* Reviews */
 .reviews {
-    background: #007bff;
+    background: #8abbef;
     color: white;
     padding: 50px 20px;
 }
@@ -251,6 +274,100 @@ nav {
 .review-card h4 {
     color: #007bff;
 }
+
+
+/* Contact Section Styling */
+.contact-section p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Follow Us Icons */
+.social-icon {
+    display: inline-block;
+    margin: 5px;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
+}
+
+
+.feedback {
+    text-align: center;
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback h2 {
+    color: #333;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feedback-form input, 
+.feedback-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.feedback-form .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.feedback-form .btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Use Cases & AI Blog Styling */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffcc00;
+    padding-left: 5px;
+}
+
+/* Copyright */
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #bbb;
+}
+
 
 
 /* Footer Styling */
@@ -294,57 +411,6 @@ footer {
     color: #ffcc00; /* Golden heading */
     position: relative;
 }
-
-/* Contact Section Styling */
-.contact-section p {
-    font-size: 16px;
-    margin: 5px 0;
-}
-
-/* Follow Us Icons */
-.social-icon {
-    display: inline-block;
-    margin: 5px;
-    font-size: 18px;
-    color: white;
-    text-decoration: none;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.social-icon:hover {
-    transform: scale(1.1);
-    color: #ffcc00;
-}
-
-/* Use Cases & AI Blog Styling */
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin: 5px 0;
-}
-
-.footer-section ul li a {
-    color: #bbb;
-    text-decoration: none;
-    transition: color 0.3s ease, padding-left 0.3s ease;
-}
-
-.footer-section ul li a:hover {
-    color: #ffcc00;
-    padding-left: 5px;
-}
-
-/* Copyright */
-.footer-bottom {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #bbb;
-}
-
-
 
 
     </style>
@@ -424,6 +490,24 @@ footer {
                 <h4>- Emily R.</h4>
             </div>
         </div>
+    </section>
+
+    <section class="feedback">
+        <h2>Share Your Feedback</h2>
+        <p>We'd love to hear your thoughts about our AI blog generator!</p>
+        
+        <form action="{{ url_for('submit_feedback') }}" method="POST" class="feedback-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="thoughts">Your Thoughts:</label>
+            <textarea id="thoughts" name="thoughts" rows="4" required></textarea>
+    
+            <button type="submit" class="btn">Submit Feedback</button>
+        </form>
     </section>
 
     <footer>

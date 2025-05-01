@@ -996,40 +996,35 @@ document.getElementById('generate-btn').addEventListener('click', function() {
     const aiResponse = document.getElementById("ai-response");
 
     let recognition;
-    let isListening = false; // Toggle state for mic
+    let isListening = false;
 
-    // Check if Speech Recognition is available
+    // Check if Speech Recognition is supported
     if ("webkitSpeechRecognition" in window) {
         recognition = new webkitSpeechRecognition();
         recognition.continuous = false;
-        recognition.interimResults = true;
+        recognition.interimResults = false;
         recognition.lang = "en-US";
 
         recognition.onstart = function () {
-            console.log("Listening...");
-            voiceMic.classList.add("listening"); // Add wave animation
+            voiceMic.classList.add("listening");
             isListening = true;
         };
 
         recognition.onresult = function (event) {
-            let transcript = "";
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                transcript += event.results[i][0].transcript;
-            }
-            recognizedText.value = transcript; // Set input field value
+            let transcript = event.results[0][0].transcript;
+            recognizedText.value = transcript;
         };
 
         recognition.onerror = function (event) {
-            console.log("Error: " + event.error);
+            console.error("Speech recognition error:", event.error);
         };
 
         recognition.onend = function () {
-            voiceMic.classList.remove("listening"); // Remove wave animation
+            voiceMic.classList.remove("listening");
             isListening = false;
-            console.log("Stopped listening.");
         };
     } else {
-        alert("Your browser does not support speech recognition. Try Google Chrome.");
+        alert("Speech recognition is not supported on this browser. Try using Google Chrome.");
     }
 
     // Toggle Speech Recognition on Mic Click
@@ -1041,53 +1036,49 @@ document.getElementById('generate-btn').addEventListener('click', function() {
         }
     });
 
-    // Send Text to AI and Generate Response
-    sendText.addEventListener("click", function () {
-        let userText = recognizedText.value.trim(); // Get value from input field
+    // Send Text to Flask for AI Response
+    sendText.addEventListener("click", async function () {
+        let userText = recognizedText.value.trim();
         if (userText === "") {
             aiResponse.innerHTML = `<strong>AI:</strong> Please enter or speak something.`;
             return;
         }
 
-        // Display User Input
         aiResponse.innerHTML = `<strong>You:</strong> ${userText}<br><strong>AI:</strong> Thinking...`;
 
-        // Simulate AI Response (Replace with Backend API Call)
-        setTimeout(() => {
-            let aiReply = generateAIResponse(userText);
-            aiResponse.innerHTML = `<strong>You:</strong> ${userText}<br><strong>AI:</strong> ${aiReply}`;
-        }, 1500);
+        try {
+            const response = await fetch("/process-voice", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ text: userText }),
+            });
 
-        // Clear input field after sending
+            const data = await response.json();
+            if (data.response) {
+                aiResponse.innerHTML = `<strong>You:</strong> ${userText}<br><strong>AI:</strong> ${data.response}`;
+            } else {
+                aiResponse.innerHTML = `<strong>AI:</strong> Sorry, I couldn't process that.`;
+            }
+        } catch (error) {
+            console.error("Error sending request:", error);
+            aiResponse.innerHTML = `<strong>AI:</strong> Failed to fetch response.`;
+        }
+
         recognizedText.value = "";
     });
 
-    // Open Voice Assistant
+    // Toggle Assistant Window
     robotBtn.addEventListener("click", function () {
-        voiceAssistant.style.bottom = "20px"; // Slide up into view
+        voiceAssistant.style.bottom = "20px";
     });
 
-    // Close Voice Assistant
     closeBtn.addEventListener("click", function () {
-        voiceAssistant.style.bottom = "-400px"; // Hide again
+        voiceAssistant.style.bottom = "-400px";
     });
-
-    // Simple AI Response Generator (Replace with API Call)
-    function generateAIResponse(userInput) {
-        let responses = {
-            "Hello": "Hi there! How can I assist you today?",
-            "how are you": "I'm just a bot, but I'm functioning well! What about you?",
-            "what is your name": "I'm your AI Assistant. How can I help?",
-            "who created you": "I was created by a talented developer to assist with various tasks!",
-            "bye": "Goodbye! Have a great day. 😊",
-            "Hii": "Hii, how are you ?"
-            
-        };
-
-        // Return predefined response or a generic one
-        return responses[userInput.toLowerCase()] || "That's interesting! Tell me more.";
-    }
 });
+
 
     </script>
 </body>

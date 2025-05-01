@@ -56,6 +56,11 @@ def about():
     """Serves the About page."""
     return render_template("about.html")
 
+@app.route("/profile")
+def profile():
+    """Serves the About page."""
+    return render_template("profile.html")
+
 @app.route("/blog")
 def blog():
     """Serves the Blog page."""
@@ -103,7 +108,7 @@ def process_voice():
         response = co.generate(
             model="command",
             prompt=f"Respond to this: {user_text}",
-            max_tokens=50
+            max_tokens=200
         )
 
         return jsonify({"response": response.generations[0].text})
@@ -111,6 +116,24 @@ def process_voice():
     except Exception as e:
         logging.error(f"❌ Cohere API error: {e}")
         return jsonify({"error": "Failed to process request."}), 500
+    
+
+
+@app.route("/submit-feedback", methods=["POST"])
+def submit_feedback():
+    """Handles feedback form submission."""
+    name = request.form.get("name")
+    email = request.form.get("email")
+    thoughts = request.form.get("thoughts")
+
+    if not name or not email or not thoughts:
+        return jsonify({"error": "All fields are required!"}), 400
+
+    # Process the feedback (store in DB or send an email)
+    logging.info(f"New Feedback: {name} ({email}) - {thoughts}")
+
+    return jsonify({"message": "Thank you for your feedback!"})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
